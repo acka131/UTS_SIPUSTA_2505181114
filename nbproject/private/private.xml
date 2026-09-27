@@ -3,16 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/acka/NetBeansProjects/SIPALAP/src/model/Kalibrasiable.java</file>
-            <file>file:/Users/acka/NetBeansProjects/SIPALAP/src/model/Alat.java</file>
-            <file>file:/Users/acka/NetBeansProjects/SIPALAP/src/model/AlatUkur.java</file>
-            <file>file:/Users/acka/NetBeansProjects/SIPALAP/src/model/Terlacak.java</file>
-            <file>file:/Users/acka/NetBeansProjects/SIPALAP/src/model/reservable.java</file>
-            <file>file:/Users/acka/NetBeansProjects/SIPALAP/src/model/Laptop.java</file>
-            <file>file:/Users/acka/NetBeansProjects/SIPALAP/src/Main.java</file>
-            <file>file:/Users/acka/NetBeansProjects/SIPALAP/src/layanan/InventarisLab.java</file>
-            <file>file:/Users/acka/NetBeansProjects/SIPALAP/src/model/Komponen.java</file>
-            <file>file:/Users/acka/NetBeansProjects/SIPALAP/src/model/Proyektor.java</file>
+            <file>file:/Users/acka/NetBeansProjects/SIPALAB/src/model/Alat.java</file>
+            <file>file:/Users/acka/NetBeansProjects/SIPALAB/src/model/Mahasiswa.java</file>
+            <file>file:/Users/acka/NetBeansProjects/SIPALAB/src/model/Petugas.java</file>
+            <file>file:/Users/acka/NetBeansProjects/SIPALAB/src/model/Laboratorium.java</file>
+            <file>file:/Users/acka/NetBeansProjects/SIPALAB/src/transaksi/Peminjaman.java</file>
+            <file>file:/Users/acka/NetBeansProjects/SIPALAB/src/Main.java</file>
+            <file>file:/Users/acka/NetBeansProjects/SIPALAB/src/layanan/InventarisLab.java</file>
         </group>
     </open-files>
 </project-private>
