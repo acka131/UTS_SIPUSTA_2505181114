@@ -3,6 +3,7 @@ import model.*;
 import layanan.InventarisLab;
 import transaksi.*;
 import koleksi.Keranjang;
+import pembanding.UrutNama;
 
 public class Main {
     public static void main(String[] args) {
@@ -166,5 +167,42 @@ public class Main {
         for (Laptop laptop : keranjangLaptop) {
             System.out.println(laptop.deskripsi());
         }
+        
+        // Dibantu ChatGPT untuk membandingkan hasil pengurutan
+        // dan memeriksa bahwa urutan asli inventaris tetap terjaga.
+        System.out.println("\n=== URUT BERDASARKAN NAMA ===");
+
+        for (Alat a : inventaris.urut(new UrutNama())) {
+            System.out.println(a.laporanRingkas());
+        }
+
+        System.out.println("\n=== URUT STATUS LALU NAMA ===");
+
+        for (Alat a : inventaris.urutBawaan()) {
+            System.out.println(a.laporanRingkas());
+        }
+
+        System.out.println("\n=== URUTAN ASLI INVENTARIS ===");
+
+        inventaris.cetakStatus();
+        
+        // Dibantu ChatGPT untuk menyiapkan data uji penghapusan.
+        System.out.println("\n=== PENGUJIAN PENGHAPUSAN ===");
+
+        InventarisLab ujiHapus = new InventarisLab();
+
+        ujiHapus.tambah(lap);   // Tidak siap: charger tidak lengkap.
+        ujiHapus.tambah(lap1);  // Siap.
+        ujiHapus.tambah(pro1);  // Siap.
+
+        System.out.println("Jumlah sebelum dihapus: "
+                + ujiHapus.semuaAlat().size());
+
+        ujiHapus.hapusYangTidakSiap();
+
+        System.out.println("Jumlah setelah dihapus: "
+                + ujiHapus.semuaAlat().size());
+
+        ujiHapus.cetakStatus();
     }
 }

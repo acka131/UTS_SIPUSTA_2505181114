@@ -56,6 +56,8 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Alat;
 import model.Kalibrasiable;
+import java.util.Comparator;
+import pembanding.UrutStatusLaluNama;
 
 public class InventarisLab {
     private final List<Alat> daftarAlat = new ArrayList<>();
@@ -107,5 +109,25 @@ public class InventarisLab {
             }
         }
         return alatTidakSiap;
+    }
+    
+    // Dibantu ChatGPT untuk mengurutkan salinan koleksi
+    // agar urutan asli inventaris tetap terjaga.
+    public List<Alat> urut(Comparator<Alat> pembanding) {
+        List<Alat> salinan = new ArrayList<>(daftarAlat);
+
+        salinan.sort(pembanding);
+
+        return salinan;
+    }
+
+    public List<Alat> urutBawaan() {
+        return urut(new UrutStatusLaluNama());
+    }
+    
+    // Dibantu ChatGPT untuk memperbaiki penghapusan elemen
+    // menggunakan removeIf sesuai Jobsheet 5.
+    public void hapusYangTidakSiap() {
+        daftarAlat.removeIf(a -> !a.siapDipinjam());
     }
 }
