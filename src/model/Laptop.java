@@ -236,7 +236,8 @@ public class Laptop extends Alat implements Terlacak {
     private String noSeri;
     private String lokasi;
 
-    public Laptop(String kodeAlat, String nama, int tahunPerolehan, int ramGB, boolean chargerLengkap, String noSeri, String lokasi) {
+    public Laptop(String kodeAlat, String nama, int tahunPerolehan, int ramGB, boolean chargerLengkap, String noSeri, String lokasi,
+                    boolean izinKeluarKampus) {
         super(kodeAlat, nama, tahunPerolehan);
         this.ramGB = ramGB;
         this.chargerLengkap = chargerLengkap;

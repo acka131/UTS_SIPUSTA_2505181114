@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import model.*;
 import layanan.InventarisLab;
 import transaksi.*;
+import koleksi.Keranjang;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,18 +13,73 @@ public class Main {
         InventarisLab inventaris = new InventarisLab();
 
         // 2. Pembuatan Objek Data (Termasuk Kelas Komponen dari Tugas Mandiri JS3)
-        Laptop lap = new Laptop("LP-002", "Lenovo ThinkPad", 2023, 16, true, "SN12345", "Lab A");
+        Laptop lap = new Laptop("LP-002", "Lenovo ThinkPad", 2023, 16, true, "SN12345", "Lab A", true);
         Proyektor pro = new Proyektor("PJ-003", "Epson EB-X51", 2022, 3300, 1500, "SN98765", "Ruang Dosen");
         AlatUkur ukur = new AlatUkur("AU-004", "Multimeter Fluke", 2020, "volt", LocalDate.of(2027, 3, 10)); // Kalibrasi valid
-        Komponen kom1 = new Komponen("KM-001", "Kabel HDMI 2 meter", 2021, 10, 2); // Siap dipinjam
-        Komponen kom2 = new Komponen("KM-002", "Adaptor USB-C", 2022, 1, 3); // Tidak siap dipinjam
+        // 2. Membuat objek Laptop
+        Laptop lap1 = new Laptop(
+                "LP-001",
+                "Lenovo ThinkPad",
+                2023,
+                16,
+                true,
+                "SN-LP-001",
+                "Laboratorium Pemrograman",
+                true
+        );
+
+        Laptop lap2 = new Laptop(
+                "LP-002",
+                "Asus Vivobook",
+                2024,
+                8,
+                true,
+                "SN-LP-002",
+                "Laboratorium Pemrograman",
+                true
+        );
+
+        // 3. Membuat objek Proyektor
+        Proyektor pro1 = new Proyektor(
+                "PJ-001",
+                "Epson EB-X51",
+                2022,
+                3300,
+                1200,
+                "SN-PJ-001",
+                "Ruang U303"
+                
+        );
+
+        Proyektor pro2 = new Proyektor(
+                "PJ-002",
+                "BenQ",
+                2023,
+                3500,
+                800,
+                "SN-PJ-002",
+                "Ruang U302"
+        );
+
+        // 4. Membuat objek AlatUkur
+        AlatUkur ukur1 = new AlatUkur(
+                "AU-001",
+                "Multimeter Fluke",
+                2020,
+                "volt",
+                LocalDate.of(2024, 3, 10)
+        );
 
         // 3. Memasukkan objek ke Koleksi Heterogen (Upcast otomatis)
+        inventaris.tambah(lap1);
+        inventaris.tambah(lap2);
+        inventaris.tambah(pro1);
+        inventaris.tambah(pro2);
+        inventaris.tambah(ukur1);
+        // Objek pengujian sebelumnya juga menjadi bagian inventaris.
         inventaris.tambah(lap);
         inventaris.tambah(pro);
         inventaris.tambah(ukur);
-        inventaris.tambah(kom1);
-        inventaris.tambah(kom2);
 
         // 4. Mencetak Status Inventaris (Pengujian Polimorfisme)
         inventaris.cetakStatus();
@@ -84,6 +140,31 @@ public class Main {
             System.out.println("Barang terlambat dikembalikan selama: " + terlambat + " hari.");
         } else {
             System.out.println("Barang dikembalikan tepat waktu.");
+        }
+        
+        // Dibantu ChatGPT untuk menguji tipe isi, kapasitas,
+        // dan perulangan pada Keranjang.
+        System.out.println("\n=== JOBSHEET 5: KERANJANG GENERIC ===");
+
+        Keranjang<Laptop> keranjangLaptop = new Keranjang<>(2);
+
+        System.out.println("Tambah laptop pertama: "
+                + keranjangLaptop.tambah(lap1));
+
+        System.out.println("Tambah laptop kedua: "
+                + keranjangLaptop.tambah(lap2));
+
+        System.out.println("Tambah laptop ketiga: "
+                + keranjangLaptop.tambah(lap));
+
+        System.out.println("Jumlah isi: " + keranjangLaptop.ukuran());
+        System.out.println("Sisa ruang: " + keranjangLaptop.sisaRuang());
+        System.out.println("Keranjang penuh: " + keranjangLaptop.penuh());
+
+        System.out.println("Isi keranjang:");
+
+        for (Laptop laptop : keranjangLaptop) {
+            System.out.println(laptop.deskripsi());
         }
     }
 }

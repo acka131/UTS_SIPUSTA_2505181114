@@ -57,12 +57,14 @@ public abstract class Alat {
 
     public abstract boolean siapDipinjam();
 
-    public String getNama() {
-        return nama;
-    }
-
-    public String laporanRingkas() {
+    
+        public String laporanRingkas() {
         String status = siapDipinjam() ? "SIAP" : "TIDAK SIAP";
         return String.format("%-8s%-22s%s", kodeAlat, nama, status);
     }
-}
+        
+    public String getNama() {
+        return nama;
+    }
+    
+    }
