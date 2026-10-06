@@ -67,4 +67,16 @@ public abstract class Alat {
         return nama;
     }
     
+    // Dibantu ChatGPT untuk menyediakan akses kode alat
+    // yang diperlukan oleh pencarian pada Jobsheet 5.
+    public String getKodeAlat() {
+        return kodeAlat;
+    }
+    
+    // Dibantu ChatGPT untuk menyediakan tahun perolehan
+    // yang diperlukan oleh pembanding UrutTahun.
+    public int getTahunPerolehan() {
+        return tahunPerolehan;
+    }
+    
     }

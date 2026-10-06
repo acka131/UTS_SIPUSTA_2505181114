@@ -4,6 +4,7 @@ import layanan.InventarisLab;
 import transaksi.*;
 import koleksi.Keranjang;
 import pembanding.UrutNama;
+import pembanding.UrutTahun;
 
 public class Main {
     public static void main(String[] args) {
@@ -204,5 +205,49 @@ public class Main {
                 + ujiHapus.semuaAlat().size());
 
         ujiHapus.cetakStatus();
+        
+        // Dibantu ChatGPT untuk menguji pencarian nama dan kode alat.
+        System.out.println("\n=== CARI BERDASARKAN NAMA: kabel ===");
+
+        for (Alat a : inventaris.cari("kabel")) {
+            System.out.println(a.laporanRingkas());
+        }
+
+        System.out.println("\n=== CARI BERDASARKAN KODE: lp-002 ===");
+
+        for (Alat a : inventaris.cari("lp-002")) {
+            System.out.println(a.laporanRingkas());
+        }
+        
+        // Dibantu ChatGPT untuk menguji urutan tahun dan pencarian
+// langsung berdasarkan kunci Map.
+        System.out.println("\n=== URUT TAHUN TERBARU LALU NAMA ===");
+
+        for (Alat a : inventaris.urut(new UrutTahun())) {
+            System.out.println(
+                    a.getTahunPerolehan()
+                    + " | "
+                    + a.laporanRingkas()
+            );
+        }
+
+        System.out.println("\n=== PENCARIAN LANGSUNG BERDASARKAN KODE ===");
+
+        Alat hasilKode = inventaris.cariKode("LP-002");
+
+        if (hasilKode != null) {
+            System.out.println("Alat ditemukan:");
+            System.out.println(hasilKode.laporanRingkas());
+        } else {
+            System.out.println("Kode alat tidak ditemukan.");
+        }
+
+        System.out.println("\n=== PENGUJIAN KODE YANG TIDAK ADA ===");
+
+        Alat hasilTidakAda = inventaris.cariKode("XX-999");
+
+        if (hasilTidakAda == null) {
+            System.out.println("Kode XX-999 tidak ditemukan.");
+        }
     }
 }
