@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package transaksi;
+import eksepsi.PeminjamanSudahDitutupException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class Peminjaman {
 
     // KOMPOSISI: detail dibuat menggunakan "new" di dalam kelas ini dan ikut lenyap bersamanya
     private final List<DetailPeminjaman> detail = new ArrayList<>();
+    private String tglPengembalianPertama;
+    private boolean statusKembali;
 
     public Peminjaman(String nomorPeminjaman, Mahasiswa peminjam, Petugas penyetuju) {
         this.nomorPeminjaman = nomorPeminjaman;
@@ -52,9 +55,27 @@ public class Peminjaman {
         return total;
     }
 
-    // --- TUGAS MANDIRI F.1 ---
-    public void kembalikan() {
-        this.tanggalKembali = LocalDate.now();
+//    // --- TUGAS MANDIRI F.1 ---
+//    public void kembalikan() {
+//        this.tanggalKembali = LocalDate.now();
+//    }
+    
+    // Method pengembalian dengan eksepsi
+    public void kembalikan(String tglPengembalian) throws PeminjamanSudahDitutupException {
+        if (this.sudahKembali()) {
+            throw new PeminjamanSudahDitutupException(this.nomorPeminjaman, this.tglPengembalianPertama);
+        }
+        // Set status kembali dan catat tanggal pengembalian
+        this.statusKembali = true;
+        this.tglPengembalianPertama = tglPengembalian;
+    }
+
+// Method menghitung denda (Rp2.000 / hari keterlambatan)
+    public int hitungDenda(int hariKeterlambatan) {
+        if (hariKeterlambatan <= 0) {
+            return 0;
+        }
+        return hariKeterlambatan * 2000;
     }
 
     // --- TUGAS MANDIRI F.2 ---
@@ -71,6 +92,18 @@ public class Peminjaman {
     
     public String getNomorPeminjaman() {
     return nomorPeminjaman;
+    }
+    
+    public Mahasiswa getPeminjam() {
+        return peminjam;
+    }
+
+    public boolean sudahKembali() {
+        return tanggalKembali != null;
+    }
+
+    public void kembalikan() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

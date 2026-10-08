@@ -9,6 +9,9 @@ package model;
  * @author acka
  */
 public class Mahasiswa {
+    
+    public static final int KUOTA_PEMINJAMAN = 3;
+    
     private String nim;
     private String nama;
     private String programStudi;
@@ -18,7 +21,16 @@ public class Mahasiswa {
         this.nama = nama;
         this.programStudi = programStudi;
     }
-    public String getNama(){
+    
+    public String getNim() {
+        return nim;
+    }
+
+    public String getNama() {
         return nama;
+    }
+
+    public String getProgramStudi() {
+        return programStudi;
     }
 }

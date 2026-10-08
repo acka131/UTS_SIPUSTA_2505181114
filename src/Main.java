@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.time.LocalDate;
 import model.*;
 import layanan.InventarisLab;
@@ -5,6 +6,8 @@ import transaksi.*;
 import koleksi.Keranjang;
 import pembanding.UrutNama;
 import pembanding.UrutTahun;
+import layanan.LayananPeminjaman;
+import eksepsi.SipalabException;
 
 public class Main {
     public static void main(String[] args) {
@@ -248,6 +251,42 @@ public class Main {
 
         if (hasilTidakAda == null) {
             System.out.println("Kode XX-999 tidak ditemukan.");
+        }
+        
+        System.out.println("=== 1. UJI VALIDASI MASUKAN ===");
+        ujiTangguh();
+
+        System.out.println("\n=== 2. UJI ATURAN BISNIS PEMINJAMAN ===");
+        LayananPeminjaman layanan = new LayananPeminjaman();
+
+        Laptop laptopBelumSiap = new Laptop("LP-002", "Asus V", 2022, 16, false, "A779", "U301", false);
+        Komponen kompBelumSiap = new Komponen("KM-002", "Adapter", 2021, 1, 0);
+        Laptop laptopSiap = new Laptop("LP-001", "Lenovo", 2023, 8, true, "L876", "N230", true);
+
+        // Eksekusi 4 kasus uji
+        cobaPinjam(layanan, mhs, ptg, laptopBelumSiap); // Kasus 1: DITOLAK
+        cobaPinjam(layanan, mhs, ptg, kompBelumSiap);   // Kasus 2: DITOLAK
+        cobaPinjam(layanan, mhs, ptg, laptopSiap);      // Kasus 3: BERHASIL
+        cobaPinjam(layanan, mhs, ptg, laptopSiap);      // Kasus 4: DITOLAK (Sedang dipinjam)
+    }
+    
+    public static void ujiTangguh() {
+        Scanner masukan = new Scanner(System.in);
+        System.out.print("Masukkan tahun perolehan: ");
+        try {
+            int tahun = Integer.parseInt(masukan.nextLine());
+            System.out.println("Tahun tercatat: " + tahun);
+        } catch (NumberFormatException e) {
+            System.out.println("Tahun harus berupa angka, contoh 2024.");
+        }
+    }
+    
+    private static void cobaPinjam(LayananPeminjaman layanan, Mahasiswa mhs, Petugas ptg, Alat alat) {
+        try {
+            Peminjaman p = layanan.pinjam(mhs, ptg, alat, 1);
+            System.out.println(" BERHASIL " + p.getNomorPeminjaman());
+        } catch (SipalabException e) {
+            System.out.println(" DITOLAK " + e.getMessage());
         }
     }
 }
