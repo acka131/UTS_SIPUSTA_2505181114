@@ -8,9 +8,28 @@ import pembanding.UrutNama;
 import pembanding.UrutTahun;
 import layanan.LayananPeminjaman;
 import eksepsi.SipalabException;
+import java.io.FileWriter;
+import java.io.IOException;
+import berkas.EksporLaporan;
+
 
 public class Main {
     public static void main(String[] args) {
+        
+         try {
+    tulisTanpaMenutup();
+        } catch (IOException e) {
+    e.printStackTrace();
+    }
+         
+         try {
+    tulisDenganAman();
+        System.out.println("File uji_aman.txt berhasil ditulis!");
+    }   catch (IOException e) {
+    
+        
+        e.printStackTrace();
+    }
         
         System.out.println("=== PENGUJIAN JOB SHEET 1 - 3 (INVENTARIS & POLIMORFISME) ===");
         
@@ -245,6 +264,7 @@ public class Main {
             System.out.println("Kode alat tidak ditemukan.");
         }
 
+        
         System.out.println("\n=== PENGUJIAN KODE YANG TIDAK ADA ===");
 
         Alat hasilTidakAda = inventaris.cariKode("XX-999");
@@ -281,12 +301,26 @@ public class Main {
         }
     }
     
+    
+    public static void tulisTanpaMenutup() throws IOException {
+        FileWriter tulis = new FileWriter("uji_lupa_tutup.txt");
+        tulis.write("Baris ini seharusnya tersimpan.");
+    // Sengaja tidak memanggil tulis.close()
+    }   
+    
+    
     private static void cobaPinjam(LayananPeminjaman layanan, Mahasiswa mhs, Petugas ptg, Alat alat) {
         try {
             Peminjaman p = layanan.pinjam(mhs, ptg, alat, 1);
             System.out.println(" BERHASIL " + p.getNomorPeminjaman());
         } catch (SipalabException e) {
             System.out.println(" DITOLAK " + e.getMessage());
+        }
+    }
+
+    public static void tulisDenganAman() throws IOException {
+        try (FileWriter tulis = new FileWriter("uji_aman.txt")) {
+        tulis.write("Baris ini pasti tersimpan.");
         }
     }
 }

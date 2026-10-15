@@ -102,8 +102,10 @@ public class Peminjaman {
         return tanggalKembali != null;
     }
 
-    public void kembalikan() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
-}
+    public void kembalikan() {
+        this.tanggalKembali = java.time.LocalDate.now();
+    }
+
+    
+    }

@@ -49,6 +49,7 @@ public abstract class Alat {
     protected String kodeAlat;
     protected String nama;
     protected int tahunPerolehan;
+    
     // Dibantu ChatGPT untuk menyimpan status awal peminjaman alat.
     private StatusAlat status = StatusAlat.TERSEDIA;
 
@@ -89,6 +90,8 @@ public abstract class Alat {
         return kodeAlat;
     }
     
+    
+    
     // Dibantu ChatGPT untuk menyediakan tahun perolehan
     // yang diperlukan oleh pembanding UrutTahun.
     public int getTahunPerolehan() {
@@ -103,6 +106,10 @@ public abstract class Alat {
     public void setStatus(StatusAlat status) {
         this.status = status;
     }
-    
+   
+    public double getBeratKg() {
+        double beratKg = 0;
+    return beratKg;
+}
     
 }
