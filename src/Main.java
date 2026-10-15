@@ -10,11 +10,13 @@ import layanan.LayananPeminjaman;
 import eksepsi.SipalabException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import berkas.EksporLaporan;
+import berkas.PenyimpanBerkas;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         
          try {
     tulisTanpaMenutup();
@@ -273,54 +275,140 @@ public class Main {
             System.out.println("Kode XX-999 tidak ditemukan.");
         }
         
-        System.out.println("=== 1. UJI VALIDASI MASUKAN ===");
+        // ==========================================
+        // E.4: UJI VALIDASI MASUKAN
+        // ==========================================
+
+        System.out.println("\n=== 1. UJI VALIDASI MASUKAN ===");
         ujiTangguh();
 
-        System.out.println("\n=== 2. UJI ATURAN BISNIS PEMINJAMAN ===");
+        // ==========================================
+        // E.4: UJI ATURAN BISNIS PEMINJAMAN
+        // ==========================================
+
+        System.out.println(
+                "\n=== 2. UJI ATURAN BISNIS PEMINJAMAN ==="
+        );
+
         LayananPeminjaman layanan = new LayananPeminjaman();
 
-        Laptop laptopBelumSiap = new Laptop("LP-002", "Asus V", 2022, 16, false, "A779", "U301", false);
-        Komponen kompBelumSiap = new Komponen("KM-002", "Adapter", 2021, 1, 0);
-        Laptop laptopSiap = new Laptop("LP-001", "Lenovo", 2023, 8, true, "L876", "N230", true);
+        Laptop laptopBelumSiap = new Laptop(
+                "LP-002", "Asus V", 2022,
+                16, false, "A779", "U301", false
+        );
 
-        // Eksekusi 4 kasus uji
-        cobaPinjam(layanan, mhs, ptg, laptopBelumSiap); // Kasus 1: DITOLAK
-        cobaPinjam(layanan, mhs, ptg, kompBelumSiap);   // Kasus 2: DITOLAK
-        cobaPinjam(layanan, mhs, ptg, laptopSiap);      // Kasus 3: BERHASIL
-        cobaPinjam(layanan, mhs, ptg, laptopSiap);      // Kasus 4: DITOLAK (Sedang dipinjam)
+        Komponen kompBelumSiap = new Komponen(
+                "KM-002", "Adapter", 2021, 1, 0
+        );
+
+        Laptop laptopSiap = new Laptop(
+                "LP-001", "Lenovo", 2023,
+                8, true, "L876", "N230", true
+        );
+
+        // Empat kasus pengujian peminjaman.
+        cobaPinjam(layanan, mhs, ptg, laptopBelumSiap);
+        cobaPinjam(layanan, mhs, ptg, kompBelumSiap);
+        cobaPinjam(layanan, mhs, ptg, laptopSiap);
+        cobaPinjam(layanan, mhs, ptg, laptopSiap);
+
+        // ==========================================
+        // E.3: UJI SERIALISASI
+        // ==========================================
+
+        System.out.println("\n=== E.3: UJI SERIALISASI ===");
+
+        PenyimpanBerkas penyimpanan =
+                new PenyimpanBerkas("inventaris.dat");
+
+        // Menyimpan data inventaris.
+        penyimpanan.simpan(inventaris.semuaAlat());
+        System.out.println("Data berhasil disimpan ke inventaris.dat");
+        System.out.println("Berkas inventaris.dat berhasil dibuat!");
+        System.out.println("Berkas uji_aman.txt berhasil dibuat dengan aman!");
+
+        // ==========================================
+        // PENGUJIAN TUGAS MANDIRI
+        // ==========================================
+        System.out.println("\n--- PENGUJIAN TUGAS MANDIRI ---");
+        try {
+            List<Alat> alatMuat = penyimpanan.muat();
+            System.out.println("Berhasil memuat " + alatMuat.size() + " alat dari inventaris.dat:");
+            for (Alat a : alatMuat) {
+                System.out.println(" - " + a.deskripsi());
+            }
+
+            EksporLaporan ekspor = new EksporLaporan();
+            ekspor.tulisCSV("laporan_inventaris.csv", alatMuat);
+            System.out.println("Laporan CSV berhasil diekspor ke laporan_inventaris.csv");
+
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Terjadi kesalahan saat memproses berkas: " + e.getMessage());
+        }
     }
-    
+
+    // ==========================================
+    // METODE VALIDASI MASUKAN
+    // ==========================================
+
     public static void ujiTangguh() {
         Scanner masukan = new Scanner(System.in);
+
         System.out.print("Masukkan tahun perolehan: ");
+
         try {
             int tahun = Integer.parseInt(masukan.nextLine());
             System.out.println("Tahun tercatat: " + tahun);
+
         } catch (NumberFormatException e) {
-            System.out.println("Tahun harus berupa angka, contoh 2024.");
-        }
-    }
-    
-    
-    public static void tulisTanpaMenutup() throws IOException {
-        FileWriter tulis = new FileWriter("uji_lupa_tutup.txt");
-        tulis.write("Baris ini seharusnya tersimpan.");
-    // Sengaja tidak memanggil tulis.close()
-    }   
-    
-    
-    private static void cobaPinjam(LayananPeminjaman layanan, Mahasiswa mhs, Petugas ptg, Alat alat) {
-        try {
-            Peminjaman p = layanan.pinjam(mhs, ptg, alat, 1);
-            System.out.println(" BERHASIL " + p.getNomorPeminjaman());
-        } catch (SipalabException e) {
-            System.out.println(" DITOLAK " + e.getMessage());
+            System.out.println(
+                    "Tahun harus berupa angka, contoh 2024."
+            );
         }
     }
 
+    // ==========================================
+    // E.1: PENULISAN TANPA MENUTUP STREAM
+    // ==========================================
+
+    public static void tulisTanpaMenutup() throws IOException {
+        FileWriter tulis = new FileWriter("uji_lupa_tutup.txt");
+
+        tulis.write("Baris ini seharusnya tersimpan.");
+
+        // Sengaja tidak memanggil close()
+        // untuk demonstrasi risiko stream tidak ditutup.
+    }
+
+    // ==========================================
+    // METODE PENGUJIAN PEMINJAMAN
+    // ==========================================
+
+    private static void cobaPinjam(
+            LayananPeminjaman layanan,
+            Mahasiswa mhs,
+            Petugas ptg,
+            Alat alat
+    ) {
+        try {
+            Peminjaman p = layanan.pinjam(mhs, ptg, alat, 1);
+
+            System.out.println(
+                    "BERHASIL " + p.getNomorPeminjaman()
+            );
+
+        } catch (SipalabException e) {
+            System.out.println("DITOLAK " + e.getMessage());
+        }
+    }
+
+    // ==========================================
+    // E.1: PENULISAN DENGAN TRY-WITH-RESOURCES
+    // ==========================================
+
     public static void tulisDenganAman() throws IOException {
         try (FileWriter tulis = new FileWriter("uji_aman.txt")) {
-        tulis.write("Baris ini pasti tersimpan.");
+            tulis.write("Baris ini pasti tersimpan.");
         }
     }
 }

@@ -43,9 +43,9 @@
 //    }
 
 package model;
+import java.io.Serializable;
 
-public abstract class Alat {
-
+public abstract class Alat implements Serializable {
     protected String kodeAlat;
     protected String nama;
     protected int tahunPerolehan;

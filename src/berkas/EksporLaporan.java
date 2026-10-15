@@ -1,4 +1,3 @@
-
 package berkas;
 
 import java.io.BufferedWriter;
@@ -10,36 +9,38 @@ import java.util.List;
 import model.Alat;
 
 public class EksporLaporan {
-
-    // Atribusi AI: bantuan untuk memahami dan menyusun
-    // method ekspor laporan inventaris ke berkas teks.
-    public void tulisInventaris(String namaBerkas, List<Alat> daftar)
-            throws IOException {
-
+    
+    public void tulisInventaris(String namaBerkas, List<Alat> daftar) throws IOException {
         try (PrintWriter tulis = new PrintWriter(
                 new BufferedWriter(new FileWriter(namaBerkas)))) {
-
             tulis.println("LAPORAN INVENTARIS ALAT LABORATORIUM");
             tulis.println("Tanggal cetak: " + LocalDate.now());
             tulis.println();
-
-            tulis.printf("%-10s %-26s %-14s %-14s%n",
-                    "KODE", "NAMA", "JENIS", "STATUS");
-
+            tulis.printf("%-10s %-26s %-14s %-14s%n", "KODE", "NAMA", "JENIS", "STATUS");
             tulis.println("-".repeat(68));
+            for (Alat a : daftar) {
+                tulis.printf("%-10s %-26s %-14s %-14s%n",
+                        a.getKodeAlat(), 
+                        a.getNama(), 
+                        a.getClass().getSimpleName(), 
+                        (a.siapDipinjam() ? "Tersedia" : "Dipinjam"));
+            }
+        }
+    }
 
-            
-        for (Alat a : daftar) {
-            tulis.printf("%-10s %-26s %-14s %-14s%n",
-            a.getKodeAlat(),
-            a.getNama(),
-            "-",
-            a.siapDipinjam() ? "SIAP" : "TIDAK SIAP");
-}
-
-
-            tulis.println();
-            tulis.println("Jumlah alat: " + daftar.size());
+    // Method tulisCSV untuk Tugas Mandiri
+    public void tulisCSV(String namaBerkasCSV, List<Alat> daftar) throws IOException {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(namaBerkasCSV))) {
+            pw.println("KodeAlat,Nama,TahunPerolehan,BeratKg,Status");
+            for (Alat a : daftar) {
+                String status = a.siapDipinjam() ? "Tersedia" : "Dipinjam";
+                pw.printf("%s,%s,%d,%.2f,%s%n",
+                        a.getKodeAlat(),
+                        a.getNama(),
+                        a.getTahunPerolehan(),
+                        a.getBeratKg(),
+                        status);
+            }
         }
     }
 }
