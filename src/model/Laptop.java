@@ -230,7 +230,7 @@
 
 package model;
 
-public class Laptop extends Alat implements Terlacak {
+public class Laptop extends Alat implements Terlacak, Perawatanable {
     private int ramGB;
     private boolean chargerLengkap;
     private String noSeri;
@@ -263,5 +263,15 @@ public class Laptop extends Alat implements Terlacak {
     @Override
     public String lokasiTerakhir() {
         return lokasi;
+    }
+    
+    @Override
+    public void lakukanPerawatan() {
+        System.out.println("Melakukan pembersihan dan update sistem pada laptop: " + getNama());
+    }
+
+    @Override
+    public boolean perluServis() {
+        return !chargerLengkap;
     }
 }
