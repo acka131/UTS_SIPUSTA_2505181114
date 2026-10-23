@@ -231,6 +231,7 @@
 package model;
 
 public class Laptop extends Alat implements Terlacak, Perawatanable {
+    private static final long serialVersionUID = 1L;
     private int ramGB;
     private boolean chargerLengkap;
     private String noSeri;

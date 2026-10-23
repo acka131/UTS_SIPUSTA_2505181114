@@ -9,5 +9,6 @@ package model;
  * @author acka
  */
 public interface Perawatanable {
-    
+    void lakukanPerawatan();
+    boolean perluServis();
 }

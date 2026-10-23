@@ -46,6 +46,7 @@ package model;
 import java.io.Serializable;
 
 public abstract class Alat implements Serializable {
+    private static final long serialVersionUID = 1L;
     protected String kodeAlat;
     protected String nama;
     protected int tahunPerolehan;

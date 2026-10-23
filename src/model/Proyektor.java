@@ -36,6 +36,7 @@
 package model;
 
 public class Proyektor extends Alat implements Terlacak {
+    private static final long serialVersionUID = 1L;
     private int lumen;
     private int jamPakaiLampu;
     private String noSeri;
