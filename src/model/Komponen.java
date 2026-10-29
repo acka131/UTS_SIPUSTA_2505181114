@@ -1,24 +1,12 @@
-///*
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
-// */
-//package model;
-//
-///**
-// *
-// * @author acka
-// */
-//public interface Komponen {
-//    
-//}
-
 package model;
 
 public class Komponen extends Alat {
+    private static final long serialVersionUID = 1L;
     private int jumlahStok;
     private int jumlahMinimum;
 
-    public Komponen(String kodeAlat, String nama, int tahunPerolehan, int jumlahStok, int jumlahMinimum) {
+    public Komponen(String kodeAlat, String nama, int tahunPerolehan,
+                     int jumlahStok, int jumlahMinimum) {
         super(kodeAlat, nama, tahunPerolehan);
         this.jumlahStok = jumlahStok;
         this.jumlahMinimum = jumlahMinimum;
@@ -27,5 +15,26 @@ public class Komponen extends Alat {
     @Override
     public boolean siapDipinjam() {
         return jumlahStok > jumlahMinimum;
+    }
+
+    public String jenis() {
+        return "Komponen";
+    }
+
+    @Override
+    public String deskripsi() {
+        return super.deskripsi() + " Stok " + jumlahStok + "/" + jumlahMinimum;
+    }
+
+    public int getJumlahStok() {
+        return jumlahStok;
+    }
+
+    public int getJumlahMinimum() {
+        return jumlahMinimum;
+    }
+
+    public void setJumlahStok(int jumlahStok) {
+        this.jumlahStok = jumlahStok;
     }
 }

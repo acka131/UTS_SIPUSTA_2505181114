@@ -69,5 +69,22 @@ public class AlatUkur extends Alat implements Kalibrasiable {
     @Override
     public String deskripsi() {
         return super.deskripsi() + " satuan " + satuan;
+    
+    }
+    public String statusKalibrasi() {
+        if (perluKalibrasi()) {
+            return "Kalibrasi kadaluarsa, perlu kalibrasi ulang (jatuh tempo: " + jatuhTempoKalibrasi() + ")";
+        } else {
+            return "Kalibrasi masih berlaku (jatuh tempo: " + jatuhTempoKalibrasi() + ")";
+        }
+    }
+
+    // Getter ini dipakai AlatDAOMySQL untuk memetakan atribut ke kolom tabel alat
+    public String getSatuan() {
+        return satuan;
+    }
+
+    public LocalDate getKalibrasiTerakhir() {
+        return kalibrasiTerakhir;
     }
 }
